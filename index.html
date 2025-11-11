@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MISIS.FIT</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSI4ZtHyM3W31RI2Zs1IABSV9-rm5Rvt-KCfw&s">
+</head>
+<body>
+    <!-- Sélecteur de langues -->
+    <div id="lang-switcher" style="position:fixed;top:20px;right:20px;z-index:99;">
+        <button onclick="setLang('ru')">Русский</button>
+        <button onclick="setLang('fr')">Français</button>
+        <button onclick="setLang('en')">English</button>
+    </div>
+
+    <!-- Page de connexion -->
+    <div id="login-page" class="login-container">
+        <div class="login-form">
+            <h2>Вход в спортивный портал университета</h2>
+            <div class="user-type-selector">
+                <div class="user-type active" data-type="student">Студент</div>
+                <div class="user-type" data-type="teacher">Преподаватель</div>
+            </div>
+            <div class="form-group">
+                <label for="email">Университетская почта</label>
+                <input type="email" id="email" placeholder="имя.фамилия@univ.ru">
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input type="password" id="password" placeholder="Ваш пароль">
+            </div>
+            <button class="btn">Войти</button>
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="#" style="color: #667eea; text-decoration: none;">Забыли пароль?</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application principale -->
+<div id="app" style="display: none;">
+    <div class="container">
+        <!-- En-tête connecté -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div style="display: flex; align-items: center;">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSI4ZtHyM3W31RI2Zs1IABSV9-rm5Rvt-KCfw&s" alt="Logo Université" style="height:40px; margin-right:15px;">
+                <h1 style="color: white; margin: 0;">MISIS.FIT</h1>
+            </div>
+            <div style="color: white;">
+                <span id="current-user">Вы вошли как: Студент</span> | 
+                <a href="#" onclick="logout()" style="color: white; text-decoration: underline;">Выйти</a>
+            </div>
+        </div>
+
+        <!-- ...reste de ton code inchangé... -->
+
+
+            <!-- Onglets navigation -->
+            <div class="nav-tabs">
+               <div class="nav-tab student-only active" data-page="dashboard">Табло</div>
+               <div class="nav-tab student-only" data-page="sections">Секции</div>
+               <div class="nav-tab" data-page="schedule">Расписание</div>
+               <div class="nav-tab student-only" data-page="progress">Прогресс</div>
+               <div class="nav-tab teacher-only" data-page="groups" style="display: none;">Мои группы</div>
+               <div class="nav-tab teacher-only" data-page="reports" style="display: none;">Отчёты</div>
+             </div>
+
+
+            <!-- Pages -->
+            <div class="page active" id="dashboard-page">
+                <h2>Табло</h2>
+                <div class="card">
+                    <h3>Добро пожаловать, <span id="user-name">Студент</span>!</h3>
+                    <p id="dashboard-message">Выберите вашу спортивную секцию, смотрите расписание и прогресс.</p>
+                </div>
+                <div class="card" id="selection-period-card" style="display: none;">
+                    <h3>Период выбора секций</h3>
+                    <p>Период сейчас <span id="period-status">закрыт</span>.</p>
+                    <p id="next-period-date">Следующий период: 15 сент - 30 сент 2024</p>
+                    <button class="btn" onclick="showPage('sections')">Показать секции</button>
+                </div>
+                <div class="card" id="current-section-card">
+                    <h3>Моя текущая секция</h3>
+                    <p id="no-section-message">Вы не записаны ни в одну секцию.</p>
+                    <div id="current-section-info" style="display: none;">
+                        <p><strong>Секция:</strong> <span id="section-name">Баскетбол</span></p>
+                        <p><strong>Тренер:</strong> <span id="teacher-name">М. Мартин</span></p>
+                        <p><strong>Статус:</strong> <span class="status-badge status-enrolled">Записан</span></p>
+                        <button class="btn" id="unsubscribe-btn" onclick="unsubscribeSection()" style="margin-top: 10px;">Отписаться</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Ближайшие занятия</h3>
+                    <div id="next-sessions">
+                        <p>Нет ближайших занятий</p>
+                    </div>
+                </div>
+            </div>
+            <div class="page" id="sections-page">
+                <h2>Секции</h2>
+                <div class="card">
+                    <h3>Выбор секции</h3>
+                    <p id="selection-status">Период сейчас закрыт.</p>
+                    <div class="filters">
+                        <select class="filter-select" id="sport-filter">
+                            <option value="">Все cпорты</option>
+                            <option value="basketball">Баскетбол</option>
+                            <option value="football">Футбол</option>
+                            <option value="volleyball">Волейбол</option>
+                            <option value="natation">Плавание</option>
+                            <option value="athlétisme">Лёгкая атлетика</option>
+                        </select>
+                        <select class="filter-select" id="day-filter">
+                            <option value="">Все дни</option>
+                            <option value="monday">Понедельник</option>
+                            <option value="tuesday">Вторник</option>
+                            <option value="wednesday">Среда</option>
+                            <option value="thursday">Четверг</option>
+                            <option value="friday">Пятница</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="section-grid" id="sections-container"></div>
+            </div>
+            <div class="page" id="schedule-page">
+                <h2>Расписание</h2>
+                <div class="card">
+                    <div id="student-schedule"><p>Ваше спортивное расписание появится здесь.</p></div>
+                    <div id="teacher-schedule" style="display: none;"><p>Расписание групп, которым вы преподаёте.</p></div>
+                </div>
+            </div>
+            <div class="page" id="progress-page">
+                <h2>Прогресс</h2>
+                <div class="card">
+                    <h3>Статистика</h3>
+                    <div id="progress-stats"><p>Ваша статистика появится здесь.</p></div>
+                </div>
+                <div class="card">
+                    <h3>История посещения</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Дата</th><th>Секция</th><th>Посещение</th><th>Заметки</th></tr>
+                        </thead>
+                        <tbody id="attendance-history"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="page" id="groups-page">
+                <h2>Мои группы</h2>
+                <div class="card"><h3>Список групп</h3><div id="teacher-groups"></div></div>
+            </div>
+            <div class="page" id="reports-page">
+                <h2>Отчёты</h2>
+                <div class="card"><h3>Генерация отчётов</h3><p>Интерфейс для отчётов активности групп.</p></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

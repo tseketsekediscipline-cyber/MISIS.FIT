@@ -28,7 +28,11 @@ const LANG = {
         selectionStatusOpen: "Период выбора открыт. Выберите секцию.",
         selectionStatusClosed: "Период выбора закрыт.",
         present: "Присутствует",
-        absent: "Отсутствует"
+        absent: "Отсутствует",
+        newsTitle: "Актуальности спорт",
+        eventUpcoming: "Предстоящие события",
+        eventPast: "Прошедшие события"
+
     },
     fr: {
         login: "Connexion MISIS.FIT",
@@ -58,7 +62,11 @@ const LANG = {
         selectionStatusOpen: "La période de sélection est ouverte. Choisissez une section sportive.",
         selectionStatusClosed: "La période de sélection est fermée.",
         present: "Présent",
-        absent: "Absent"
+        absent: "Absent",
+        newsTitle: "Actualités sportives",
+        eventUpcoming: "Événements à venir",
+        eventPast: "Événements passés"
+
     },
     en: {
         login: "Login to MISIS.FIT",
@@ -88,7 +96,11 @@ const LANG = {
         selectionStatusOpen: "Selection period is open. Choose a sport section.",
         selectionStatusClosed: "Selection period is closed.",
         present: "Present",
-        absent: "Absent"
+        absent: "Absent",
+        newsTitle: "Sports News",
+        eventUpcoming: "Upcoming Events",
+        eventPast: "Past Events"
+
     }
 };
 
@@ -334,7 +346,7 @@ function applyLang() {
         LANG[currentLang].currentUser + ": " + (appData.userType === "teacher" ? LANG[currentLang].userTypes.teacher : LANG[currentLang].userTypes.student);
     document.getElementById('user-name').textContent =
         (appData.userType === "teacher" ? LANG[currentLang].userTypes.teacher : LANG[currentLang].userTypes.student);
-    document.querySelector('.container h1').textContent = "MISIS.FIT";
+    document.querySelector('.container h1').textContent = "";
     document.querySelector('.container a').textContent = LANG[currentLang].logout;
     document.getElementById('dashboard-page').querySelector('h2').textContent = appData.userType==='teacher'?LANG[currentLang].dashboardTeacher:LANG[currentLang].dashboardStudent;
 }
@@ -399,7 +411,13 @@ function updateUIForUserType() {
 function showPage(pageId) {
     document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
     document.getElementById(pageId + '-page').classList.add('active');
+    
+    // Charger les actualités quand on clique sur l'onglet news
+    if (pageId === 'news') {
+        loadNewsPage();
+    }
 }
+
 
 // Sections sportives dynamique + langue
 function loadSections() {
@@ -500,8 +518,7 @@ function loadUserData() {
     if (appData.userType === 'student') loadStudentData();
     else loadTeacherData();
 }
-
-function loadStudentData() {
+    function loadStudentData() {
     const hasSection = appData.userSections.length > 0;
     document.getElementById('no-section-message').style.display = hasSection ? 'none' : 'block';
     document.getElementById('current-section-info').style.display = hasSection ? 'block' : 'none';
@@ -509,8 +526,8 @@ function loadStudentData() {
         const currentSection = appData.userSections[0];
         document.getElementById('section-name').textContent = currentSection.name[currentLang];
         document.getElementById('teacher-name').textContent = currentSection.teacher;
+
     }
-    
     // Emploi du temps étudiant illustratif
     const schedule = [
         { day: "Понедельник", time: "16:00-18:00", sport: "Баскетбол", salle: "Зал A" },
@@ -682,4 +699,264 @@ function updateAttendanceHistory() {
         `;
     });
     container.innerHTML = html;
+}  
+
+// Textes multilingues pour la page de reset
+const RESET_TEXTS = {
+    ru: {
+        title: "Забыли пароль?",
+        labelEmail: "Ваш университетский e-mail",
+        emailPlaceholder: "имя.фамилия@univ.ru",
+        sendBtn: "Отправить код",
+        labelCode: "Полученный код:",
+        labelNewPass: "Новый пароль:",
+        confirmBtn: "Сохранить",
+        back: "Вернуться к входу",
+        msgSent: "Код отправлен на ваш e-mail.",
+        msgSuccess: "Пароль успешно изменён! Теперь войдите с новым.",
+        errorEmail: "Введите корректный e-mail.",
+        errorCode: "Неверный код.",
+        errorPw: "Пароль слишком короткий."
+    },
+    fr: {
+        title: "Mot de passe oublié",
+        labelEmail: "Votre e-mail universitaire",
+        emailPlaceholder: "prenom.nom@univ.fr",
+        sendBtn: "Envoyer le code",
+        labelCode: "Code reçu :",
+        labelNewPass: "Nouveau mot de passe :",
+        confirmBtn: "Valider",
+        back: "Retour à la connexion",
+        msgSent: "Un code a été envoyé à votre adresse e-mail.",
+        msgSuccess: "Mot de passe modifié ! Connectez-vous avec le nouveau mot de passe.",
+        errorEmail: "Veuillez indiquer une adresse email valide.",
+        errorCode: "Code incorrect !",
+        errorPw: "Mot de passe trop court."
+    },
+    en: {
+        title: "Forgot your password?",
+        labelEmail: "Your university email",
+        emailPlaceholder: "firstname.lastname@univ.com",
+        sendBtn: "Send code",
+        labelCode: "Code received:",
+        labelNewPass: "New password:",
+        confirmBtn: "Confirm",
+        back: "Back to login",
+        msgSent: "A code was sent to your email.",
+        msgSuccess: "Password changed successfully! Please log in with your new password.",
+        errorEmail: "Please enter a valid email.",
+        errorCode: "Incorrect code.",
+        errorPw: "Password too short."
+    }
+};
+
+function applyResetLang() {
+    const t = RESET_TEXTS[currentLang];
+    document.getElementById('reset-title').textContent = t.title;
+    document.getElementById('reset-label-email').textContent = t.labelEmail;
+    document.getElementById('reset-email').placeholder = t.emailPlaceholder;
+    document.getElementById('send-reset-code').textContent = t.sendBtn;
+    document.getElementById('reset-label-code').textContent = t.labelCode;
+    document.getElementById('reset-label-newpass').textContent = t.labelNewPass;
+    document.getElementById('confirm-reset').textContent = t.confirmBtn;
+    document.getElementById('reset-back-btn').textContent = t.back;
+    document.getElementById('reset-message').textContent = '';
+    document.getElementById('reset-step2').style.display = 'none';
+}
+
+// Active la page reset password, désactive connexion
+document.querySelector('.login-form a').onclick = function(e) {
+    e.preventDefault();
+    document.getElementById('login-page').style.display = 'none';
+    document.getElementById('reset-password-page').style.display = 'flex';
+    applyResetLang();
+};
+
+// Retour à la connexion depuis la page reset
+document.getElementById('reset-back-btn').onclick = function() {
+    document.getElementById('reset-password-page').style.display = 'none';
+    document.getElementById('login-page').style.display = 'flex';
+};
+
+const oldSetLang = setLang;
+setLang = function(lang) {
+    currentLang = lang;
+    oldSetLang(lang);
+    if (document.getElementById('reset-password-page').style.display === 'flex')
+        applyResetLang();
+};
+
+let resetTempCode = "123456"; // MOCK : à remplacer par code envoyé par le serveur
+document.getElementById('send-reset-code').onclick = function() {
+    const email = document.getElementById('reset-email').value.trim();
+    const t = RESET_TEXTS[currentLang];
+    if (!email || !email.includes("@")) {
+        alert(t.errorEmail);
+        return;
+    }
+    // Ici, appelle serveur /api/send-code
+    document.getElementById('reset-message').style.color = 'green';
+    document.getElementById('reset-message').textContent = t.msgSent;
+    document.getElementById('reset-step2').style.display = 'block';
+};
+
+document.getElementById('confirm-reset').onclick = function() {
+    const code = document.getElementById('reset-code').value.trim();
+    const newPw = document.getElementById('new-password').value;
+    const t = RESET_TEXTS[currentLang];
+    if (code !== resetTempCode) {
+        alert(t.errorCode);
+        return;
+    }
+    if (!newPw || newPw.length < 5) {
+        alert(t.errorPw);
+        return;
+    }
+    // Ici, appelle backend pour changer le mot de passe
+    document.getElementById('reset-message').style.color = 'green';
+    document.getElementById('reset-message').textContent = t.msgSuccess;
+    setTimeout(() => {
+        document.getElementById('reset-password-page').style.display = 'none';
+        document.getElementById('login-page').style.display = 'flex';
+    }, 1800);
+}
+
+
+function loadNewsPage() {
+    const newsContainer = document.getElementById('news-feed');
+    if (!newsContainer) return;
+
+    newsContainer.innerHTML = '';
+
+    // All news events
+    const allEvents = [
+        // UPCOMING EVENTS (GREEN)
+        {
+            title: { ru: '🏀 Финал Чемпионата по Баскетболу', fr: '🏀 Finale du Championnat de Basketball', en: '🏀 Basketball Championship Final' },
+            date: '15 ноября',
+            time: '18:00',
+            location: { ru: 'Спортзал №1', fr: 'Gymnase №1', en: 'Gym №1' },
+            status: 'upcoming'
+        },
+        {
+            title: { ru: '🏊 Турнир по Плаванию', fr: '🏊 Tournoi de Natation', en: '🏊 Swimming Tournament' },
+            date: '16 ноября',
+            time: '10:00',
+            location: { ru: 'Бассейн МИСИС', fr: 'Piscine MISIS', en: 'MISIS Pool' },
+            status: 'upcoming'
+        },
+        {
+            title: { ru: '⚽ Матч по Футболу (Муж)', fr: '⚽ Match de Football (H)', en: '⚽ Football Match (Men)' },
+            date: '17 ноября',
+            time: '19:30',
+            location: { ru: 'Стадион МИСИС', fr: 'Stade MISIS', en: 'MISIS Stadium' },
+            status: 'upcoming'
+        },
+        {
+            title: { ru: '🎾 Чемпионат по Теннису', fr: '🎾 Championnat de Tennis', en: '🎾 Tennis Championship' },
+            date: '18 ноября',
+            time: '14:00',
+            location: { ru: 'Теннисные корты', fr: 'Courts de Tennis', en: 'Tennis Courts' },
+            status: 'upcoming'
+        },
+        {
+            title: { ru: '🏐 Волейбол: МИСИС vs МГУ', fr: '🏐 Volleyball: MISIS vs MGU', en: '🏐 Volleyball: MISIS vs MGU' },
+            date: '19 ноября',
+            time: '17:00',
+            location: { ru: 'Спортзал №2', fr: 'Gymnase №2', en: 'Gym №2' },
+            status: 'upcoming'
+        },
+
+        // PAST EVENTS (GRAY)
+        {
+            title: { ru: '⚽ Результат: Футбол (Жен) 3:1', fr: '⚽ Résultat: Football (F) 3:1', en: '⚽ Result: Football (Women) 3:1' },
+            date: '10 ноября',
+            time: '18:00',
+            location: { ru: 'Стадион МИСИС', fr: 'Stade MISIS', en: 'MISIS Stadium' },
+            status: 'past'
+        },
+        {
+            title: { ru: '🏃 Кросс-кантри забег завершён', fr: '🏃 Course de Cross-country terminée', en: '🏃 Cross-country Run Completed' },
+            date: '8 ноября',
+            time: '09:00',
+            location: { ru: 'Парк МИСИС', fr: 'Parc MISIS', en: 'MISIS Park' },
+            status: 'past'
+        },
+        {
+            title: { ru: '🥊 Бокс: внутренний турнир 🥊', fr: '🥊 Boxe: tournoi interne', en: '🥊 Boxing: Internal Tournament' },
+            date: '5 ноября',
+            time: '16:00',
+            location: { ru: 'Тренировочный зал', fr: 'Salle d\'entraînement', en: 'Training Hall' },
+            status: 'past'
+        },
+        {
+            title: { ru: '🤸 Гимнастика: Демонстрация 2:0', fr: '🤸 Gymnastique: Démonstration 2:0', en: '🤸 Gymnastics: Showcase 2:0' },
+            date: '3 ноября',
+            time: '15:00',
+            location: { ru: 'Большой спортзал', fr: 'Grand Gymnase', en: 'Main Gym' },
+            status: 'past'
+        }
+    ];
+
+    // UPCOMING SECTION
+    const upcomingEvents = allEvents.filter(e => e.status === 'upcoming');
+    if (upcomingEvents.length > 0) {
+        const upcomingHTML = `
+            <div class="news-section">
+                <h3 style="color: #27ae60; margin-bottom: 15px;">
+                    <span style="font-size: 20px;">📅</span> 
+                    ${LANG[currentLang].eventUpcoming}
+                </h3>
+                ${upcomingEvents.map(event => `
+                    <div class="news-item news-upcoming" style="border-left: 5px solid #27ae60; padding: 15px; margin-bottom: 15px; background: #f0f8f4; border-radius: 4px;">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div>
+                                <h4 style="margin: 0 0 8px 0; color: #2c3e50;">${event.title[currentLang]}</h4>
+                                <p style="margin: 5px 0; color: #7f8c8d; font-size: 14px;">
+                                    📍 ${event.location[currentLang]} | ⏰ ${event.time}
+                                </p>
+                                <p style="margin: 5px 0; color: #95a5a6; font-size: 13px;">📅 ${event.date}</p>
+                            </div>
+                            <span style="background: #27ae60; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; white-space: nowrap;">
+                               ${currentLang === 'ru' ? 'Предстоящие' : (currentLang === 'fr' ? 'À venir' : 'Upcoming')}
+                             </span>
+
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        newsContainer.innerHTML += upcomingHTML;
+    }
+
+    // PAST SECTION
+    const pastEvents = allEvents.filter(e => e.status === 'past');
+    if (pastEvents.length > 0) {
+        const pastHTML = `
+            <div class="news-section" style="margin-top: 30px;">
+                <h3 style="color: #95a5a6; margin-bottom: 15px;">
+                    <span style="font-size: 20px;">📜</span> 
+                    ${LANG[currentLang].eventPast}
+                </h3>
+                ${pastEvents.map(event => `
+                    <div class="news-item news-past" style="border-left: 5px solid #bdc3c7; padding: 15px; margin-bottom: 15px; background: #f5f5f5; border-radius: 4px; opacity: 0.9;">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div>
+                                <h4 style="margin: 0 0 8px 0; color: #7f8c8d;">${event.title[currentLang]}</h4>
+                                <p style="margin: 5px 0; color: #95a5a6; font-size: 14px;">
+                                    📍 ${event.location[currentLang]} | ⏰ ${event.time}
+                                </p>
+                                <p style="margin: 5px 0; color: #bdc3c7; font-size: 13px;">📅 ${event.date}</p>
+                            </div>
+                            <span style="background: #95a5a6; color: white; padding: 6px 12px; border-radius: 4px; font-size: 12px; white-space: nowrap;">
+                                ${currentLang === 'ru' ? 'Прошедшие' : (currentLang === 'fr' ? 'Passé' : 'Past')}
+                             </span>
+
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        newsContainer.innerHTML += pastHTML;
+    }
 }

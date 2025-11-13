@@ -5,9 +5,12 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     min-height: 100vh;
-    /* Fond bleu MISIS */
     background: #003399;
     color: #fff;
 }
@@ -18,31 +21,51 @@ body {
     padding: 20px;
 }
 
-/* Page de connexion avec photo MISIS */
+/* ===== PAGE DE CONNEXION ===== */
 #login-page {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background:
-        linear-gradient(135deg, rgba(0,51,153,0.7) 0%, rgba(44,62,80,0.7) 100%),
+        linear-gradient(135deg, rgba(0,51,153,0.6) 0%, rgba(44,62,80,0.6) 100%),
         url('https://en.misis.ru/files/-/04b4947bd3af39f0ca61ccb2fbc9726c/MISIS-NEW.jpg') no-repeat center center;
     background-size: cover;
+    background-attachment: fixed;
+    padding: 20px;
 }
 
 .login-form {
-    background: rgba(255,255,255,0.95);
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    background: rgba(255,255,255,0.96);
+    padding: 50px 40px;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.5);
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .login-form h2 {
     text-align: center;
     margin-bottom: 30px;
     color: #003399;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 .form-group {
@@ -51,78 +74,243 @@ body {
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     color: #333;
+    font-weight: 600;
+    font-size: 14px;
 }
 
-.form-group input, .form-group select {
+.form-group input,
+.form-group select {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #d1dee3;
-    border-radius: 5px;
-    font-size: 16px;
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255,255,255,0.85);
+    font-family: inherit;
+}
+
+.form-group input::placeholder {
+    color: #bbb;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #003399;
+    box-shadow: 0 0 0 4px rgba(0,51,153,0.1);
+    background: white;
 }
 
 .btn {
     width: 100%;
-    padding: 12px;
-    background: #003399;
+    padding: 13px 24px;
+    background: linear-gradient(135deg, #003399 0%, #0052cc 100%);
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 16px rgba(0,51,153,0.3);
+    font-family: inherit;
 }
 
 .btn:hover {
-    background: #0057b8;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0,51,153,0.4);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .user-type-selector {
     display: flex;
-    margin-bottom: 20px;
-    border: 1px solid #d1dee3;
-    border-radius: 5px;
-    overflow: hidden;
+    gap: 12px;
+    margin-bottom: 30px;
+    background: #f8f9fa;
+    padding: 6px;
+    border-radius: 10px;
 }
 
 .user-type {
     flex: 1;
-    padding: 10px;
+    padding: 12px 16px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: white;
+    color: #003399;
     text-align: center;
     cursor: pointer;
-    background: #f4f6f8;
-    color: #003399;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-type:hover {
+    background: #f8f9fa;
+    transform: translateY(-2px);
 }
 
 .user-type.active {
-    background: #003399;
+    background: linear-gradient(135deg, #003399 0%, #0052cc 100%);
     color: white;
+    box-shadow: 0 8px 16px rgba(0,51,153,0.3);
 }
 
-/* Navigation */
+.login-form a {
+    display: block;
+    text-align: center;
+    color: #003399;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 15px;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.login-form a:hover {
+    color: #0052cc;
+    text-decoration: underline;
+}
+
+/* ===== PAGE RESET PASSWORD ===== */
+#reset-password-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background:
+        linear-gradient(135deg, rgba(0,51,153,0.6) 0%, rgba(44,62,80,0.6) 100%),
+        url('https://en.misis.ru/files/-/04b4947bd3af39f0ca61ccb2fbc9726c/MISIS-NEW.jpg') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    padding: 20px;
+}
+
+#reset-password-page .login-form {
+    background: rgba(255,255,255,0.96);
+    padding: 50px 40px;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    width: 100%;
+    max-width: 420px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.5);
+    animation: slideUp 0.5s ease-out;
+}
+
+#reset-password-page h2 {
+    color: #003399;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 26px;
+}
+
+#reset-password-page #reset-message {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#reset-password-page #reset-back-btn {
+    width: 100%;
+    padding: 10px;
+    background: none;
+    border: none;
+    color: #003399;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+#reset-password-page #reset-back-btn:hover {
+    color: #0052cc;
+    text-decoration: underline;
+}
+
+/* ===== APPLICATION PRINCIPALE ===== */
+#app {
+    background:
+        linear-gradient(135deg, rgba(0,51,153,0.75), rgba(44,62,80,0.75) 100%),
+        url('https://www.studyinrussia.ru/storage/images/university-gallery/121/photo/po2CKBXGpYPHePgGZGlA8ZrRntwhHnrzSmOaSIEz.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    padding-bottom: 40px;
+}
+
+.container h1 {
+    color: white;
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.container a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.3s ease;
+}
+
+.container a:hover {
+    opacity: 0.85;
+}
+
+/* ===== NAVIGATION TABS ===== */
 .nav-tabs {
     display: flex;
-    background: rgba(255,255,255,0.95);
-    border-radius: 10px 10px 0 0;
-    overflow: hidden;
+    gap: 8px;
+    background: rgba(255,255,255,0.97);
+    padding: 16px;
+    border-radius: 14px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    border: 1px solid rgba(0,0,0,0.08);
+    overflow-x: auto;
 }
 
 .nav-tab {
-    flex: 1;
-    padding: 15px;
-    text-align: center;
-    cursor: pointer;
-    background: #e5e7eb;
-    border-bottom: 3px solid transparent;
+    padding: 11px 20px;
+    border-radius: 8px;
+    background: #f5f6fa;
     color: #003399;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent;
+    white-space: nowrap;
+    font-family: inherit;
+}
+
+.nav-tab:hover {
+    background: rgba(0,51,153,0.08);
+    transform: translateY(-2px);
 }
 
 .nav-tab.active {
-    background: white;
-    border-bottom: 3px solid #003399;
-    font-weight: bold;
+    background: linear-gradient(135deg, #003399 0%, #0052cc 100%);
+    color: white;
+    box-shadow: 0 8px 16px rgba(0,51,153,0.3);
 }
 
 .nav-tab.disabled {
@@ -130,35 +318,62 @@ body {
     pointer-events: none;
 }
 
-/* Application principale : fond bleu */
-#app {
-    background: #003399;
-    min-height: 100vh;
+.nav-tab.teacher-only,
+.nav-tab.student-only {
+    display: flex;
 }
 
-/* Contenu */
+/* ===== PAGES ===== */
 .page {
     display: none;
-    background: rgba(255,255,255,0.95);
-    padding: 20px;
-    border-radius: 0 0 10px 10px;
-    min-height: 500px;
-    color: #003399;
 }
 
 .page.active {
     display: block;
+    animation: fadeIn 0.3s ease-in;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ===== CARDS ===== */
 .card {
-    background: #f4f6f8;
-    padding: 20px;
-    border-radius: 8px;
+    background: rgba(255,255,255,0.97);
+    padding: 24px;
+    border-radius: 12px;
     margin-bottom: 20px;
-    border-left: 4px solid #003399;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    border-left: 5px solid #003399;
     color: #003399;
+    transition: all 0.3s ease;
 }
 
+.card:hover {
+    box-shadow: 0 10px 28px rgba(0,0,0,0.16);
+    transform: translateY(-2px);
+}
+
+.card h3 {
+    color: #003399;
+    font-size: 20px;
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.card p {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+/* ===== SECTION GRID ===== */
 .section-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -167,127 +382,580 @@ body {
 }
 
 .section-card {
-    background: white;
-    border: 1px solid #d1dee3;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background: rgba(255,255,255,0.97);
+    border-radius: 12px;
+    padding: 20px;
+    border: 2px solid transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
     color: #003399;
 }
 
+.section-card:hover {
+    border-color: #003399;
+    box-shadow: 0 10px 28px rgba(0,51,153,0.2);
+    transform: translateY(-4px);
+}
+
+.section-card h3 {
+    color: #003399;
+    font-size: 16px;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.section-card p {
+    color: #555;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+/* ===== FILTERS ===== */
 .filters {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     margin-bottom: 20px;
     flex-wrap: wrap;
 }
 
 .filter-select {
-    padding: 8px 12px;
-    border: 1px solid #d1dee3;
-    border-radius: 5px;
+    padding: 10px 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
     background: white;
     color: #003399;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    font-size: 14px;
 }
 
+.filter-select:focus {
+    outline: none;
+    border-color: #003399;
+    box-shadow: 0 0 0 3px rgba(0,51,153,0.1);
+}
+
+.filter-select:hover {
+    border-color: #003399;
+}
+
+/* ===== STATUS BADGES ===== */
 .status-badge {
     display: inline-block;
-    padding: 4px 8px;
-    border-radius: 4px;
+    padding: 6px 12px;
+    border-radius: 6px;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
 
 .status-enrolled {
-    background: #d9ebfa;
+    background: rgba(0,51,153,0.15);
     color: #003399;
 }
 
 .status-pending {
-    background: #ffe59e;
-    color: #856404;
+    background: rgba(255,193,7,0.15);
+    color: #f39c12;
 }
 
+/* ===== TABLES ===== */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    margin-top: 16px;
+    background: rgba(255,255,255,0.97);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-th, td {
-    padding: 12px 15px;
+table thead {
+    background: linear-gradient(135deg, #003399 0%, #0052cc 100%);
+    color: white;
+}
+
+table th {
+    padding: 14px;
     text-align: left;
-    border-bottom: 1px solid #d1dee3;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+table th {
+    padding: 14px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
 
-th {
-    background: #f4f6f8;
-    font-weight: bold;
-    color: #003399;
+table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #555;
+    font-size: 13px;
+}
+
+table tbody tr:hover {
+    background: rgba(0,51,153,0.05);
 }
 
 .attendance-present {
     color: #28a745;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .attendance-absent {
     color: #dc3545;
-    font-weight: bold;
-}
-#lang-switcher { display: none !important; }
-/* Responsive pour mobile */
-@media (max-width: 800px) {
-  .container {
-    padding: 0 5vw;
-    width: 100vw;
-    min-width: 0;
-  }
-  .login-form {
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-    padding: 10px;
-  }
-  .nav-tabs {
-    flex-wrap: wrap;
-    font-size: 16px;
-  }
-  .nav-tab {
-    min-width: 90px;
-    font-size: 15px;
-    padding: 10px 4px;
-  }
-  h1 {
-    font-size: 22px !important;
-  }
-  .card {
-    padding: 12px;
-    font-size: 15px;
-  }
-  table {
-    font-size: 14px;
-  }
-  /* Logo plus petit sur mobile */
-  .container img[alt="Logo Université"] {
-    height: 28px !important;
-    margin-right: 10px !important;
-  }
+    font-weight: 700;
 }
 
-@media (max-width: 500px) {
-  .container {
-    padding: 0 2vw;
-  }
-  .nav-tab {
-    min-width: 70px;
+/* ===== NEWS ITEMS ===== */
+.news-item {
+    background: rgba(255,255,255,0.97);
+    border-left: 5px solid;
+    padding: 18px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.news-item:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    transform: translateX(4px);
+}
+
+.news-item.news-upcoming {
+    border-left-color: #28a745;
+}
+
+.news-item.news-past {
+    border-left-color: #6c757d;
+    opacity: 0.9;
+}
+
+.news-item h4 {
+    color: #003399;
+    font-size: 15px;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.news-item p {
+    color: #555;
     font-size: 13px;
-  }
-  h1 {
-    font-size: 18px !important;
-  }
-  .login-form {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.news-section {
+    margin-bottom: 30px;
+}
+
+.news-section h3 {
+    color: #003399;
+    font-size: 18px;
+    margin-bottom: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.news-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.news-header h4 {
+    margin: 0;
+    color: #003399;
+    font-size: 16px;
+}
+
+.news-sport {
+    background: #003399;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.news-desc {
+    color: #555;
+    margin: 10px 0;
     font-size: 14px;
-    padding: 6px;
-  }
+    line-height: 1.5;
+}
+
+.news-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 12px;
+    color: #888;
+    flex-wrap: wrap;
+}
+
+#news-page h3 {
+    color: #003399;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #003399;
+    padding-bottom: 10px;
+}
+
+#news-feed {
+    margin-top: 20px;
+}
+/* ===== LANG SWITCHER ===== */
+#lang-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+}
+
+#lang-switcher button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.9);
+    color: #003399;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+#lang-switcher button:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+#lang-switcher button.active {
+    background: linear-gradient(135deg, #003399 0%, #0052cc 100%);
+    color: white;
+}
+
+/* ===== RESPONSIVE MOBILE ===== */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .login-form {
+        padding: 35px 25px;
+        max-width: 90%;
+    }
+
+    .login-form h2 {
+        font-size: 22px;
+    }
+
+    .nav-tabs {
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 12px;
+    }
+
+    .nav-tab {
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+
+    .card h3 {
+        font-size: 18px;
+    }
+
+    .section-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-card {
+        padding: 15px;
+    }
+
+    .section-card h3 {
+        font-size: 15px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    table th,
+    table td {
+        padding: 8px 10px;
+    }
+
+    .filters {
+        flex-direction: column;
+    }
+
+    .filter-select {
+        width: 100%;
+    }
+
+    .news-item {
+        padding: 14px;
+    }
+
+    .news-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .news-sport {
+        margin-top: 8px;
+    }
+
+    .news-meta {
+        gap: 10px;
+        font-size: 11px;
+    }
+
+    #lang-switcher {
+        top: 10px;
+        right: 10px;
+    }
+
+    #lang-switcher button {
+        padding: 6px 10px;
+        font-size: 10px;
+    }
+
+    .container h1 {
+        font-size: 22px;
+    }
+
+    .page {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 5px;
+    }
+
+    .login-form {
+        padding: 25px 18px;
+        max-width: 95%;
+    }
+
+    .login-form h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .nav-tab {
+        font-size: 10px;
+        padding: 6px 10px;
+    }
+
+    .card {
+        padding: 12px;
+    }
+
+    .card h3 {
+        font-size: 16px;
+    }
+
+    .card p {
+        font-size: 13px;
+    }
+
+    .section-card {
+        padding: 12px;
+    }
+
+    .section-card h3 {
+        font-size: 14px;
+    }
+
+    table {
+        font-size: 11px;
+    }
+
+    table th,
+    table td {
+        padding: 6px 8px;
+    }
+
+    .filter-select {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .btn {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    .user-type {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+
+    .news-item {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+
+    .news-item h4 {
+        font-size: 14px;
+    }
+
+    .news-desc {
+        font-size: 12px;
+    }
+
+    #lang-switcher {
+        top: 8px;
+        right: 8px;
+    }
+
+    #lang-switcher button {
+        padding: 5px 8px;
+        font-size: 9px;
+    }
+
+    .container h1 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    input,
+    select {
+        font-size: 14px !important;
+    }
+
+    .status-badge {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-size: 13px;
+    }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* ===== SCROLL BAR ===== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #003399;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0052cc;
+}
+
+/* ===== UTILITIES ===== */
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.p-10 {
+    padding: 10px;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    #lang-switcher {
+        display: none;
+    }
+
+    .nav-tabs {
+        display: none;
+    }
+
+    .btn {
+        display: none;
+    }
+
+    .page {
+        display: block !important;
+    }
+}
+#lang-switcher {
+    display: none !important;
 }

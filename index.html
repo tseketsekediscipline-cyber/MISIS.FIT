@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MISIS.FIT</title>
+    <title>МИСИС.FIT</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSI4ZtHyM3W31RI2Zs1IABSV9-rm5Rvt-KCfw&s">
 </head>
@@ -37,6 +37,32 @@
             </div>
         </div>
     </div>
+    
+<!-- Page réinitialisation mot de passe (cachée par défaut) -->
+<div id="reset-password-page" class="login-container" style="display:none;">
+    <div class="login-form">
+        <h2 id="reset-title">Mot de passe oublié</h2>
+        <div class="form-group">
+            <label for="reset-email" id="reset-label-email">Votre e-mail universitaire</label>
+            <input type="email" id="reset-email" placeholder="prenom.nom@univ.fr">
+        </div>
+        <button class="btn" id="send-reset-code" style="width:100%;margin-bottom:15px;">Envoyer le code</button>
+        <div id="reset-step2" style="display:none;">
+            <div class="form-group">
+                <label for="reset-code" id="reset-label-code">Code reçu :</label>
+                <input type="text" id="reset-code" placeholder="Код из 6 цифр">
+            </div>
+            <div class="form-group">
+                <label for="new-password" id="reset-label-newpass">Nouveau mot de passe :</label>
+                <input type="password" id="new-password" placeholder="Новый пароль">
+            </div>
+            <button class="btn" id="confirm-reset" style="width:100%;margin-bottom:15px;">Valider</button>
+        </div>
+        <button id="reset-back-btn" style="background:none;border:none;margin-top:5px;text-decoration:underline;cursor:pointer;">Retour à la connexion</button>
+        <div id="reset-message" style="color:green;margin-top:8px;"></div>
+    </div>
+</div>
+
 
     <!-- Application principale -->
 <div id="app" style="display: none;">
@@ -44,7 +70,7 @@
         <!-- En-tête connecté -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
             <div style="display: flex; align-items: center;">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSI4ZtHyM3W31RI2Zs1IABSV9-rm5Rvt-KCfw&s" alt="Logo Université" style="height:40px; margin-right:15px;">
+                
                 <h1 style="color: white; margin: 0;">MISIS.FIT</h1>
             </div>
             <div style="color: white;">
@@ -54,18 +80,16 @@
         </div>
 
         <!-- ...reste de ton code inchangé... -->
-
-
-            <!-- Onglets navigation -->
-            <div class="nav-tabs">
-               <div class="nav-tab student-only active" data-page="dashboard">Табло</div>
-               <div class="nav-tab student-only" data-page="sections">Секции</div>
-               <div class="nav-tab" data-page="schedule">Расписание</div>
-               <div class="nav-tab student-only" data-page="progress">Прогресс</div>
-               <div class="nav-tab teacher-only" data-page="groups" style="display: none;">Мои группы</div>
-               <div class="nav-tab teacher-only" data-page="reports" style="display: none;">Отчёты</div>
-             </div>
-
+           <!-- Onglets navigation -->
+           <div class="nav-tabs">
+             <div class="nav-tab student-only active" data-page="dashboard">Табло</div>
+             <div class="nav-tab student-only" data-page="sections">Секции</div>
+             <div class="nav-tab" data-page="schedule">Расписание</div>
+             <div class="nav-tab student-only" data-page="news">Актуальности</div>
+             <div class="nav-tab student-only" data-page="progress">Прогресс</div>
+             <div class="nav-tab teacher-only" data-page="groups" style="display: none;">Мои группы</div>
+             <div class="nav-tab teacher-only" data-page="reports" style="display: none;">Отчёты</div>
+           </div>
 
             <!-- Pages -->
             <div class="page active" id="dashboard-page">
@@ -130,6 +154,11 @@
                     <div id="teacher-schedule" style="display: none;"><p>Расписание групп, которым вы преподаёте.</p></div>
                 </div>
             </div>
+            <div class="page" id="news-page">
+              <h2 id="news-title">Актуальности спорт</h2>
+             <div id="news-feed"></div>
+            </div>
+
             <div class="page" id="progress-page">
                 <h2>Прогресс</h2>
                 <div class="card">

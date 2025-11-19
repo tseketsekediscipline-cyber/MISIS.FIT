@@ -430,11 +430,11 @@ function loadSections() {
         const canEnroll = section.enrollmentOpen && appData.selectionPeriodOpen;
         sectionCard.innerHTML = `
     <h3>${section.name[currentLang]}</h3>
-    <p><strong>${LANG[currentLang].sport || "Sport"}:</strong> ${section.sport}</p>
+    <p><strong>${LANG[currentLang].Спорт || "Спорт"}:</strong> ${section.Спорт}</p>
     <p><strong>${LANG[currentLang].prof}:</strong> ${section.teacher}</p>
-    <p><strong>${LANG[currentLang].schedule || "Horaires"}:</strong> ${section.schedule}</p>
+    <p><strong>${LANG[currentLang].schedule || "Расписания"}:</strong> ${section.schedule}</p>
     <p>${section.description[currentLang]}</p>
-    <p><strong>Мест/Places:</strong> ${section.enrolled}/${section.capacity}</p>
+    <p><strong>Места:</strong> ${section.enrolled}/${section.capacity}</p>
     <div style="margin-top: 15px;">
         ${isEnrolled ?
             `<span class="status-badge status-enrolled">${LANG[currentLang].alreadyEnrolled}</span>

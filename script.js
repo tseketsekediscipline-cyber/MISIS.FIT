@@ -430,11 +430,11 @@ function loadSections() {
         const canEnroll = section.enrollmentOpen && appData.selectionPeriodOpen;
         sectionCard.innerHTML = `
     <h3>${section.name[currentLang]}</h3>
-    <p><strong>${LANG[currentLang].Спорт || "Спорт"}:</strong> ${section.Спорт}</p>
+    <p><strong>${LANG[currentLang].sport || "Спорт"}:</strong> ${section.name[currentLang]}</p>
     <p><strong>${LANG[currentLang].prof}:</strong> ${section.teacher}</p>
     <p><strong>${LANG[currentLang].schedule || "Расписания"}:</strong> ${section.schedule}</p>
     <p>${section.description[currentLang]}</p>
-    <p><strong>Места:</strong> ${section.enrolled}/${section.capacity}</p>
+    <p><strong>Мест:</strong> ${section.enrolled}/${section.capacity}</p>
     <div style="margin-top: 15px;">
         ${isEnrolled ?
             `<span class="status-badge status-enrolled">${LANG[currentLang].alreadyEnrolled}</span>
@@ -600,7 +600,7 @@ function loadTeacherGroups() {
         { name: 'Баскетбол Начинающие Группа A', students: 15 },
         { name: 'Футбол Соревнование', students: 22 },
         { name: 'Плавание Группа 1', students: 12 },
-        { name: 'Powerlifting Advanced', students: 9 }
+        { name: 'пауэрлифтинг', students: 9 }
     ];
     let html = '';
     groups.forEach(group => {
